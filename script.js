@@ -1,4 +1,9 @@
-let tabs = ["Medicamentos", "Modelos", "Enfermaria", "Maternidade", "Ambulatório", "Paciente"];
+let fixedTabs = ["Medicamentos", "Modelos", "Enfermaria", "Maternidade", "Ambulatório", "Paciente"];
+let tabs = [...fixedTabs];
+let subtabs = {
+  "Ambulatório": ["Paciente A", "Paciente B"],
+  "Enfermaria": ["Rotina", "Pendências"]
+};
 const tabsDiv = document.getElementById("tabs");
 const noteArea = document.getElementById("noteArea");
 const addTabBtn = document.getElementById("addTabBtn");
@@ -10,9 +15,9 @@ let notes = JSON.parse(localStorage.getItem("lailanotes_notes") || "{}");
 function renderTabs() {
   tabsDiv.innerHTML = "";
   tabs.forEach(tab => {
-    const btn = document.createElement("button");
+    const btn = document.createElement("div");
+    btn.className = "tab" + (tab === activeTab ? " active" : "");
     btn.textContent = tab;
-    btn.className = (tab === activeTab) ? "active" : "";
     btn.onclick = () => {
       saveNote();
       activeTab = tab;
@@ -20,7 +25,43 @@ function renderTabs() {
       updateNoteArea();
       renderTabs();
     };
+
+    if (!fixedTabs.includes(tab)) {
+      const closeBtn = document.createElement("span");
+      closeBtn.className = "close-btn";
+      closeBtn.textContent = "×";
+      closeBtn.onclick = (e) => {
+        e.stopPropagation();
+        if (confirm("Deseja apagar a aba "" + tab + ""?")) {
+          tabs = tabs.filter(t => t !== tab);
+          delete notes[tab];
+          if (activeTab === tab) activeTab = tabs[0];
+          localStorage.setItem("lailanotes_activeTab", activeTab);
+          localStorage.setItem("lailanotes_notes", JSON.stringify(notes));
+          renderTabs();
+          updateNoteArea();
+        }
+      };
+      btn.appendChild(closeBtn);
+    }
+
     tabsDiv.appendChild(btn);
+
+    if (subtabs[tab]) {
+      subtabs[tab].forEach(sub => {
+        const subBtn = document.createElement("div");
+        subBtn.className = "tab subtab" + (sub === activeTab ? " active" : "");
+        subBtn.textContent = sub;
+        subBtn.onclick = () => {
+          saveNote();
+          activeTab = sub;
+          localStorage.setItem("lailanotes_activeTab", sub);
+          updateNoteArea();
+          renderTabs();
+        };
+        tabsDiv.appendChild(subBtn);
+      });
+    }
   });
 }
 
