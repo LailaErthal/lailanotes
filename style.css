@@ -1,1 +1,79 @@
+body {
+  font-family: 'Nunito', sans-serif;
+  background-color: #fdfbf7;
+  margin: 0;
+  padding: 0;
+}
 
+#title {
+  text-align: center;
+  margin: 10px 0 0;
+  font-size: 1.6em;
+}
+
+#auth {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#auth input {
+  padding: 8px;
+  font-size: 1em;
+  font-family: 'Nunito', sans-serif;
+}
+
+#auth button {
+  padding: 8px 12px;
+  font-family: 'Nunito', sans-serif;
+}
+
+#main {
+  display: flex;
+  height: calc(100vh - 60px);
+}
+
+#sidebar {
+  width: 200px;
+  background-color: #fffefc;
+  padding: 10px;
+  border-right: 1px solid #ccc;
+  overflow-y: auto;
+}
+
+#sidebar button {
+  width: 100%;
+  margin-bottom: 10px;
+  font-family: 'Nunito', sans-serif;
+}
+
+#tab-list {
+  list-style: none;
+  padding: 0;
+}
+
+#tab-list li {
+  cursor: pointer;
+  margin-bottom: 6px;
+  font-family: 'Nunito', sans-serif;
+}
+
+#tab-list li span.delete {
+  float: right;
+  color: red;
+  cursor: pointer;
+}
+
+#editor {
+  flex: 1;
+  padding: 10px;
+}
+
+#note {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  font-size: 1em;
+  font-family: 'Nunito', sans-serif;
+  border: none;
+  resize: none;
+}
