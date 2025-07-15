@@ -1,5 +1,6 @@
-let fixedTabs = ["Medicamentos", "Modelos", "Enfermaria", "Maternidade", "Ambulatório", "Paciente"];
-let tabs = [...fixedTabs];
+const fixedTabs = ["Medicamentos", "Modelos", "Enfermaria", "Maternidade", "Ambulatório", "Paciente"];
+let savedTabs = JSON.parse(localStorage.getItem("lailanotes_tabs") || "[]");
+let tabs = [...new Set([...fixedTabs, ...savedTabs])];
 let subtabs = {
   "Ambulatório": ["Paciente A", "Paciente B"],
   "Enfermaria": ["Rotina", "Pendências"]
@@ -34,6 +35,7 @@ function renderTabs() {
         e.stopPropagation();
         if (confirm("Deseja apagar a aba "" + tab + ""?")) {
           tabs = tabs.filter(t => t !== tab);
+          localStorage.setItem("lailanotes_tabs", JSON.stringify(tabs.filter(t => !fixedTabs.includes(t))));
           delete notes[tab];
           if (activeTab === tab) activeTab = tabs[0];
           localStorage.setItem("lailanotes_activeTab", activeTab);
@@ -84,6 +86,7 @@ addTabBtn.addEventListener("click", () => {
   const newTab = prompt("Nome da nova aba:");
   if (newTab && !tabs.includes(newTab)) {
     tabs.push(newTab);
+    localStorage.setItem("lailanotes_tabs", JSON.stringify(tabs.filter(t => !fixedTabs.includes(t))));
     renderTabs();
     activeTab = newTab;
     updateNoteArea();
