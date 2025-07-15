@@ -1,1 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LailaNotes</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <h1 id="title">✧ LailaNotes ✧</h1>
+  <div id="note-container">
+    <textarea id="note" placeholder="Escreva suas anotações aqui..."></textarea>
+  </div>
+</body>
+<!-- Firebase -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
+  const firebaseConfig = {
+    apiKey: "AIzaSyA5xeu4x5iJ49MpSQzPPnze6mniZwW5Z00",
+    authDomain: "lailanotes.firebaseapp.com",
+    databaseURL: "https://lailanotes-default-rtdb.firebaseio.com",
+    projectId: "lailanotes",
+    storageBucket: "lailanotes.appspot.com",
+    messagingSenderId: "515760278257",
+    appId: "1:515760278257:web:fa4b1f00efdddb48d1d06e"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const noteRef = ref(db, "notes/note");
+
+  const noteTextarea = document.getElementById("note");
+  let typingTimer;
+
+  get(noteRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      noteTextarea.value = snapshot.val();
+    }
+  });
+
+  noteTextarea.addEventListener("input", () => {
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(() => {
+      set(noteRef, noteTextarea.value);
+    }, 800);
+  });
+</script>
+</html>

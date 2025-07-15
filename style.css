@@ -1,1 +1,34 @@
+body {
+  font-family: 'Anonymous Pro', monospace;
+  background-color: #fdfbf7;
+  margin: 0;
+  padding: 0;
+}
 
+#title {
+  font-family: 'Anonymous Pro', monospace;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 1.8em;
+}
+
+#note-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 0 10px;
+}
+
+#note {
+  width: 100%;
+  max-width: 920px;
+  height: calc(100vh - 80px);
+  padding: 20px;
+  font-size: 1em;
+  font-family: 'Anonymous Pro', monospace;
+  border: none;
+  outline: none;
+  resize: none;
+  background-color: #fffdf9;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}

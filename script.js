@@ -1,1 +1,1 @@
-
+// Arquivo reservado para futuras melhorias: múltiplas abas, chat, etc.
